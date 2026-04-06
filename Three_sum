@@ -1,0 +1,48 @@
+# Intuition
+I knew that there could be a brute force with this using a triple nested loop but also know that wouldn't be the fastest way. I figured that itd be quicker to use two pointers, but wasn't exactly sure on how to implement it. After a bit of thought I came to using a squeezing two pointer technique
+
+# Approach
+Basically we have are still index i which is being iterated in a for loop, and all we have are the initializers for our two moving pointers low and high, and a check to make sure that we're not checking the same index to avoid duplicate answers. After that we just used a simple while loop that would continue as long as the lower pointer was less than the higher pointer, and would iterate and move the pointers according to the current needs to reach a sum of 0. Once the sum would reach 0 it'd append 
+
+# Complexity
+- Time complexity:
+O(n^2)
+
+- Space complexity:
+O(n)
+
+# Code
+```python []
+class Solution(object):
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        nums.sort()
+        
+        answer = []
+        high = len(nums) - 1
+        for i in range(len(nums)):
+            if nums[i - 1] == nums[i] and i > 0:
+                continue
+            low = i + 1
+            high = len(nums) - 1
+            while low < high:
+                tsum = nums[i] + nums[low] + nums[high]
+                if tsum < 0:
+                    low += 1
+                elif tsum > 0:
+                    high -= 1
+                else:
+                    answer.append([nums[low], nums[high], nums[i]])
+                    low += 1
+                    high -= 1
+
+                    while low < high and nums[low] == nums[low - 1]:
+                        low += 1
+        return answer
+
+                
+
+```
